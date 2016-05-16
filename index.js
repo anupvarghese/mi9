@@ -5,6 +5,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.contentType('application/json');
+  next();
+});
+
 app.get('/', (req, res) => {
   res.json({ hello: 'App is now running, please post the data' });
 });
@@ -27,7 +32,18 @@ app.post('/', (req, res) => {
   if (respData.length === 0) {
     return res.status(400).send({ error: 'Could not decode request: JSON parsing failed' });
   }
-  return res.json(respData);
+  return res.json({ response: respData });
+});
+
+app.all('*', () => {
+  throw new Error('Bad request');
+});
+
+app.use((e, req, res, next) => {
+  if (e.message === 'Bad request') {
+    res.status(400).json({ error: 'Could not decode request: JSON parsing failed' });
+  }
+  next();
 });
 
 const port = process.env.PORT || 3000;
