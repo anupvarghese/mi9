@@ -4,7 +4,7 @@
   "description": "Coding challenge for mi9",
   "main": "index.js",
   "scripts": {
-    "start-prod": "./node_modules/.bin/babel-node ./index.js",
+    "start": "./node_modules/.bin/babel-node ./index.js",
     "start-dev": "nodemon index.js --exec babel-node",
     "test": "mocha --recursive --compilers js:babel-core/register"
   },
