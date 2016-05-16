@@ -107,3 +107,17 @@ describe('Example access other route', () => {
     });
   });
 });
+
+describe('Example post invalid json', () => {
+  it('should not post data', done => {
+    request.post('localhost:3000/someotherroute')
+    .set('Content-Type', 'application/json')
+    .send('{"invalid"}')
+    .end((err, res) => {
+      assert.equal(400, res.status);
+      assert.equal('application/json', res.type);
+      assert.equal(JSON.stringify(errorResp), res.text);
+      done();
+    });
+  });
+});

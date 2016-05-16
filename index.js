@@ -15,7 +15,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
+  console.log(req.length);
+  console.log(req.body);
   const data = req.body;
+  if (!Object.keys(data)) {
+    return res.status(400).send({ error: 'Could not decode request: JSON parsing failed' });
+  }
   const filteredData = typeof data.payload !== 'undefined' ?
               data.payload.filter(m => (m.drm === true && m.episodeCount > 0)) :
               null;
@@ -41,6 +46,9 @@ app.all('*', () => {
 
 app.use((e, req, res, next) => {
   if (e.message === 'Bad request') {
+    res.status(400).json({ error: 'Could not decode request: JSON parsing failed' });
+  }
+  if (e instanceof SyntaxError) {
     res.status(400).json({ error: 'Could not decode request: JSON parsing failed' });
   }
   next();
