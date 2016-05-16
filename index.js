@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.json({ hello: 'All the best' });
+  res.json({ hello: 'App is now running, please post the data' });
 });
 
 app.post('/', (req, res) => {

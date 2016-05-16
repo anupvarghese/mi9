@@ -13,7 +13,7 @@ describe('server', () => {
   it('should return 200', done => {
     request.get('localhost:3000').end((err, res) => {
       assert.equal(200, res.status);
-      assert.deepEqual(JSON.parse('{"hello": "All the best" }'), JSON.parse(res.text));
+      assert.equal(JSON.stringify({ hello: 'App is now running, please post the data' }), res.text);
       done();
     });
   });
